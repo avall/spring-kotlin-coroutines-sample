@@ -8,6 +8,8 @@ import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToMono
+import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.kotlin.test.test
 
 
@@ -29,8 +31,16 @@ class IntegrationTests {
         client.get()
                 .uri("/posts")
                 .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .test()
+                .exchangeToMono { response ->
+                    response.bodyToMono<ByteArray>()
+                        .defaultIfEmpty(ByteArray(0))
+                        .flatMap { body ->
+                            ServerResponse
+                                .status(response.statusCode())
+                                .headers { it.addAll(response.headers().asHttpHeaders()) }
+                                .bodyValue(body)
+                        }
+                }                .test()
                 .expectNextMatches { it.statusCode() == HttpStatus.OK }
                 .verifyComplete()
     }

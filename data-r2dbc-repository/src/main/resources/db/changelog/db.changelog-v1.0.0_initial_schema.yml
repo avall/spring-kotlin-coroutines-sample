@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0
+      author: Alex Vall
+      changes:
+        - createTable:
+            tableName: posts
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: content
+                  type: varchar(255)
+        - createTable:
+            tableName: content
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: post_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_post
+                    referencedTableName: posts
+                    referencedColumnNames: id
+                    deleteCascade: NO ACTION
+

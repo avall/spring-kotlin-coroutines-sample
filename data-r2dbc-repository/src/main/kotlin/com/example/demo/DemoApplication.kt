@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.util.*
 
 
 @SpringBootApplication
@@ -41,8 +42,8 @@ class DataInitializer(private val postRepository: PostRepository) {
         runBlocking {
             val deleted = postRepository.deleteAll()
             println(" $deleted posts removed.")
-            postRepository.save(Post(title = "My first post title", content = "Content of my first post"))
-            postRepository.save(Post(title = "My second post title", content = "Content of my second post"))
+            postRepository.save(Post(id=UUID.randomUUID() ,title = "My first post title", content = "Content of my first post"))
+            postRepository.save(Post(id=UUID.randomUUID() ,title = "My second post title", content = "Content of my second post"))
         }
 
         println(" done data initialization  ...")
@@ -63,7 +64,7 @@ class PostController(
             postRepository.findAll().asFlow()
 
     @GetMapping("{id}")
-    suspend fun findOne(@PathVariable id: Long): Post? =
+    suspend fun findOne(@PathVariable id: UUID): Post? =
             postRepository.findById(id).awaitFirstOrElse { throw PostNotFoundException(id) }
 
     @PostMapping("")
@@ -84,7 +85,7 @@ class PostController(
 }
 
 
-class PostNotFoundException(postId: Long) : RuntimeException("Post:$postId is not found...")
+class PostNotFoundException(postId: UUID) : RuntimeException("Post:$postId is not found...")
 
 @RestControllerAdvice
 class RestWebExceptionHandler {
@@ -97,11 +98,11 @@ class RestWebExceptionHandler {
     }
 }
 
-interface PostRepository : R2dbcRepository<Post, Long> {}
+interface PostRepository : R2dbcRepository<Post, UUID> {}
 
 //Query derivation not yet supported
 //https://docs.spring.io/spring-data/r2dbc/docs/1.0.x/reference/html/#r2dbc.repositories.queries
-interface CommentRepository : R2dbcRepository<Comment, Long> {
+interface CommentRepository : R2dbcRepository<Comment, UUID> {
     @Query("SELECT * FROM comments WHERE post_id = $1")
     fun findByPostId(id: Long): Flux<Comment>
 
@@ -111,12 +112,12 @@ interface CommentRepository : R2dbcRepository<Comment, Long> {
 
 
 @Table("comments")
-data class Comment(@Id val id: Long? = null,
+data class Comment(@Id val id: UUID,
                    @Column("content") val content: String? = null,
                    @Column("post_id") val postId: Long? = null)
 
 @Table("posts")
-data class Post(@Id val id: Long? = null,
+data class Post(@Id val id: UUID,
                 @Column("title") val title: String? = null,
                 @Column("content") val content: String? = null
 )

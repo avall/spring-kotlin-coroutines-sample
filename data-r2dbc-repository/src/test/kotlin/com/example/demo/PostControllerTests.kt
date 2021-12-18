@@ -1,11 +1,6 @@
 package com.example.demo
 
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMap
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.reactive.asFlow
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -16,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.core.publisher.Flux
+import java.util.*
 
 @WebFluxTest(
         controllers = [PostController::class],
@@ -41,7 +37,7 @@ class PostControllerTests {
     fun `get all posts`() {
         val postsFlow = Flux.just("Post one", "Post two")
                 .map {
-                    Post(title = it, content = "content of $it")
+                    Post(id= UUID.randomUUID() ,title = it, content = "content of $it")
                 }
         given(posts.findAll()).willReturn(postsFlow)
         client.get()
