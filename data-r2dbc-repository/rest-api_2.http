@@ -1,0 +1,41 @@
+#Switzerland.
+POST http://localhost:8080/posts
+#POST https://oneback-ms-account-contract.30d437346.eu-central-1.one-wefoxgroup.cloud/api/v1/contracts/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+#Authorization: Basic dXNlcjowbjM4NGNrIUMwbnRyNGN0JEQzdg==
+#Authorization: Basic dXNlcjowbjM4NGNrIUNvbnRyYWN0JFN0OQ==
+
+#"documents": [{
+#"type": "image/png",
+#"url": "one-broker-portal/12221815617580PMNWQYJS7XA/SWT/p_YsMwxuaCF9RAcnDXTvkGwSWT/SWT_p_YsMwxuaCF9RAcnDXTvkGwSWT_1579253753915.png"
+#}
+#]
+
+{
+  "title": "5f85967c985570001f410b4c",
+  "content": "1980-12-01T12:07:00.000Z"
+}
+
+####
+
+#Germany
+GET http://localhost:8080/posts
+#POST https://oneback-ms-account-contract.30d437346.eu-central-1.one-wefoxgroup.cloud/api/v1/contracts/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Authorization: Basic dXNlcjowbjM4NGNrIUMwbnRyNGN0JEQzdg==
+
+#"documents": [{
+#"type": "image/png",
+#"url": "one-broker-portal/12221815617580PMNWQYJS7XA/SWT/p_YsMwxuaCF9RAcnDXTvkGwSWT/SWT_p_YsMwxuaCF9RAcnDXTvkGwSWT_1579253753915.png"
+#}
+#]
+
+
+
+
+####
+

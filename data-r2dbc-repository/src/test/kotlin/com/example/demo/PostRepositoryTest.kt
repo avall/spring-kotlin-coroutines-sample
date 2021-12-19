@@ -15,7 +15,7 @@ import java.util.*
 class PostRepositoryTest {
 
     @Autowired
-    private lateinit var posts: PostRepository
+    private lateinit var postRepository: PostRepository
 
     @Autowired
     private lateinit var client: DatabaseClient
@@ -37,7 +37,7 @@ class PostRepositoryTest {
         println("inserted id:$inserted")
 
         runBlocking {
-            val post = posts.findById(id).awaitSingle()
+            val post = postRepository.findById(id).awaitSingle()
             assertEquals("mytitle", post?.title)
             assertEquals("mycontent", post?.content)
         }

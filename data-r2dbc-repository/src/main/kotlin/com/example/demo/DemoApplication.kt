@@ -67,7 +67,7 @@ class PostController(
     suspend fun findOne(@PathVariable id: UUID): Post? =
             postRepository.findById(id).awaitFirstOrElse { throw PostNotFoundException(id) }
 
-    @PostMapping("")
+    @PostMapping
     suspend fun save(@RequestBody post: Post): Post =
             postRepository.save(post).awaitSingle()
 
@@ -112,12 +112,12 @@ interface CommentRepository : R2dbcRepository<Comment, UUID> {
 
 
 @Table("comments")
-data class Comment(@Id val id: UUID,
+data class Comment(@Id val id: UUID?=null,
                    @Column("content") val content: String? = null,
                    @Column("post_id") val postId: Long? = null)
 
 @Table("posts")
-data class Post(@Id val id: UUID,
+data class Post(@Id val id: UUID?=null,
                 @Column("title") val title: String? = null,
                 @Column("content") val content: String? = null
 )
