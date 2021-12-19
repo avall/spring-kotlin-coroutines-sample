@@ -1,16 +1,4 @@
 spring:
-  h2:
-    console:
-      #http://localhost:8080/h2-console
-      enabled: true
-      path: /h2
-#      datasource:
-#       url: jdbc:h2:mem:qamyapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
-#       driver-class-name: org.h2.Driver
-#       username: sa
-#       password:
-      settings:
-        trace: true
   r2dbc:
 #    url: r2dbc:postgresql://localhost/test
 #    username: user
@@ -19,17 +7,34 @@ spring:
     url: r2dbc:h2:mem:///qamyapp?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
     name: sa
     password:
-#  datasource:
-#    url: jdbc:h2:mem:qamyapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
   liquibase:
     enabled: true
     url: jdbc:h2:mem:qamyapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
 #    driver-class-name: org.h2.Driver
 #    user: sa
 #    password:
+
+# ***** H2 CONSOLE NOT WORKING IN REACTIVE WORLD
+
+#  datasource:
+#    url: jdbc:h2:mem:qamyapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+
+#  h2:
+#    console:
+#      #http://localhost:8080/h2-console
+#      enabled: true
+#      path: /h2
+##      datasource:
+##       url: jdbc:h2:mem:qamyapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
+##       driver-class-name: org.h2.Driver
+##       username: sa
+##       password:
+#      settings:
+#        trace: true
+
 
 logging:
   level:
